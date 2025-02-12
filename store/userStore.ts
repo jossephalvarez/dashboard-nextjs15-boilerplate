@@ -1,22 +1,32 @@
 import { create } from "zustand";
 import { getUsers } from "@/services/userService";
-import { useFetchData } from "@/hooks/useFetchData";
 import { User } from "@/types/User";
-import {useEffect} from "react";
 
 interface UserStore {
     users: User[];
     loading: boolean;
     error: string | null;
-    fetchUsers: () => void;
+    fetchUsers: () => Promise<void>;  // Ahora es una función async que devuelve una Promise
     updateUser: (id: number, newData: Partial<User>) => void;
 }
 
+// ✅ Versión optimizada de Zustand con la lógica de fetch dentro del store
 export const useUserStore = create<UserStore>((set) => ({
     users: [],
     loading: false,
     error: null,
-    fetchUsers: () => {}, // Lo definiremos dentro del hook
+
+    // ✅ Se integra la función fetchUsers directamente en el store
+    fetchUsers: async () => {
+        set({ loading: true, error: null }); // 🔹 Indicamos que está cargando
+
+        try {
+            const users = await getUsers(); // 🔹 Llamamos al servicio
+            set({ users, loading: false }); // 🔹 Guardamos los usuarios en el estado
+        } catch (error) {
+            set({ error: `${error}`, loading: false }); // 🔹 Manejamos errores
+        }
+    },
 
     updateUser: (id, newData) => {
         set((state) => ({
@@ -26,17 +36,3 @@ export const useUserStore = create<UserStore>((set) => ({
         }));
     },
 }));
-
-// 📌 Custom hook para conectar Zustand con useFetchData
-export const useUserData = () => {
-    const { setState } = useUserStore;
-    const { data, loading, error, refetch } = useFetchData<User[]>(getUsers);
-
-    useEffect(() => {
-        if (data) {
-            setState({ users: data, loading, error });
-        }
-    }, [data, loading, error, setState]);
-
-    return { loading, error, refetch };
-};

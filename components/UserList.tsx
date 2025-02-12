@@ -1,10 +1,11 @@
 "use client"
-import React, {useState, useMemo, useRef} from "react";
-import {useUsers} from "@/hooks/useUsers";
-import UserCard from "./UserCard";
+import {useEffect, useMemo, useState} from "react";
+import { useUserStore } from "@/store/userStore";
+import UserCard from "@/components/UserCard";
+import {User} from "@/types/User";
 
-const UserList: React.FC = () => {
-    const {users, loading, error, handleUpdateUser} = useUsers();
+const UserList = () => {
+    const { users, loading, error, fetchUsers, updateUser } = useUserStore();
     const [filter, setFilter] = useState("");
 
     const filteredUsers = useMemo(() => {
@@ -13,8 +14,15 @@ const UserList: React.FC = () => {
         );
     }, [users, filter]);
 
-    if (loading) return <p>Cargando usuarios...</p>;
-    if (error) return <p>{error}</p>;
+    const handleUpdateUser = (id: number, newData: Partial<User>) => {
+        updateUser(id, newData);
+    };
+    useEffect(() => {
+        fetchUsers(); // 🔹 Llamamos la función directamente
+    }, [fetchUsers]);
+
+    if (loading) return <p>🔄 Cargando usuarios...</p>;
+    if (error) return <p>❌ {error}</p>;
 
     return (
         <div>
@@ -36,5 +44,6 @@ const UserList: React.FC = () => {
         </div>
     );
 };
+
 
 export default UserList;
