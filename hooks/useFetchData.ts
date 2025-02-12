@@ -1,26 +1,26 @@
+// src/hooks/useFetchData.ts
 import { useState, useEffect, useCallback } from "react";
 
-export const useFetchData = <T,>(fetchFunction: () => Promise<T>) => {
+export function useFetchData<T>(fetchFunction: () => Promise<T>) {
     const [data, setData] = useState<T | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchData = useCallback(async () => {  // Usa useCallback para evitar recrear la función fetchData.
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
-            setError(null);
             const result = await fetchFunction();
             setData(result);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Error desconocido");
+        } catch (err: any) {
+            setError(err.message);
         } finally {
             setLoading(false);
         }
     }, [fetchFunction]);
 
     useEffect(() => {
-        fetchData(); //Llama a fetchFunction (puede ser getUsers(), getPosts(), etc.).
+        fetchData();
     }, [fetchData]);
 
     return { data, loading, error, refetch: fetchData };
-};
+}
