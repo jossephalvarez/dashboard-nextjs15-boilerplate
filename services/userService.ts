@@ -12,3 +12,13 @@ export const getUsers = async () => {
         throw error;
     }
 };
+
+export const getUsersById = async (id: string | Array<string> | undefined) => {
+    try {
+        const response = await axios.get(`${USERS_API}/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching users by Id:", error);
+        throw error;
+    }
+};

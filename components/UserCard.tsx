@@ -1,15 +1,19 @@
 import React from "react";
-import {UserCardProps} from "@/types/User";
+import Link from "next/link";
+import {User} from "@/types/User";
 
+interface UserCardProps {
+    user: User;
+    onUpdate: () => void;
+}
 
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
+const UserCard: React.FC<UserCardProps> = ({ user, onUpdate }) => {
     return (
-        <div className="p-4 border rounded shadow">
-            <h2 className="text-lg font-bold">{user.name}</h2>
-            <p>Email: {user.email}</p>
-            <p>Phone: {user.phone}</p>
-            <p>Website: {user.website}</p>
-        </div>
+        <li>
+            <strong>{user?.name}</strong> - {user?.email}
+            <button onClick={onUpdate}>Actualizar</button>
+            <Link href={`/users/${user?.id}`}>Ver detalles</Link>
+        </li>
     );
 };
 

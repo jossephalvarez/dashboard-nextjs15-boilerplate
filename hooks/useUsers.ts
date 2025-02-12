@@ -1,26 +1,21 @@
-import { useEffect, useState } from "react";
-import { getUsers } from "@/services/userService";
+import { useEffect, useCallback } from "react";
+import { useUserStore, useUserData } from "@/store/userStore";
 import {User} from "@/types/User";
 
 export const useUsers = () => {
-    const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const { users, updateUser } = useUserStore();
+    const { loading, error, refetch } = useUserData();
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const data = await getUsers();
-                setUsers(data);
-            } catch (err) {
-                setError("Error fetching users");
-            } finally {
-                setLoading(false);
-            }
-        };
+        if (users.length === 0) refetch();
+    }, [refetch, users]);
 
-        fetchUsers();
-    }, []);
+    const handleUpdateUser = useCallback(
+        (id: number, newData: Partial<User>) => {
+            updateUser(id, newData);
+        },
+        [updateUser]
+    );
 
-    return { users, loading, error };
+    return { users, loading, error, handleUpdateUser };
 };
