@@ -7,7 +7,8 @@ interface UserCardProps {
     onUpdate: () => void;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user, onUpdate }) => {
+
+const UserCard = ({ user, onUpdate }: UserCardProps) => {
     return (
         <li>
             <strong>{user?.name}</strong> - {user?.email}

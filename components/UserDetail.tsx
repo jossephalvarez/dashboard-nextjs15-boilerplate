@@ -5,7 +5,9 @@ import { User } from '@/types/User';
 import {useFetch} from "@/hooks/useFetch";
 import {USERS_API} from "@/constants/api";
 import {useEffect} from "react";
-const UserDetailPage: React.FC = () => {
+
+
+const UserDetailPage = () =>  {
     const { id } = useParams();  // Utilizamos useParams para obtener el id de la URL
     // const { data: user } = useFetchData<User>(()=>getUsersById(id));
     const { data: user, loading, error } = useFetch<User>(id ? `${USERS_API}/${id}` : '');
