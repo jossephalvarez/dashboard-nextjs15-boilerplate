@@ -5,7 +5,7 @@ import ProductList from '@/components/ProductList'; // El hook que necesitamos m
 import '@testing-library/jest-dom';
 
 // Mockeamos el hook `useProductId` para simular diferentes estados.
-jest.mock('/hooks/useProductId');
+jest.mock('@/hooks/useProductId');
 
 describe('ProductList', () => {
   it('debería mostrar "loading" mientras se están cargando los datos', () => {

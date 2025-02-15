@@ -6,8 +6,8 @@ import { User } from '@/types/User';
 const ProductList = () => {
   const { data: users, loading, error } = useProductId<User[]>(USERS_API);
 
-  if (loading) <p>....loading</p>;
-  if (error) <p>....error</p>;
+  if (loading) return <p>....loading</p>; // ✅ Debes usar return aquí
+  if (error) return <p>....error</p>; // ✅ Debes usar return aquí
   if (!users) return null;
 
   return (
