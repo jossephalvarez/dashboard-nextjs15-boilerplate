@@ -41,7 +41,7 @@ const UserDetailPage = () => {
       <button onClick={() => router.back()}>🔙 Volver</button>
       <br />
 
-      <ProductList user={user}></ProductList>
+      <ProductList></ProductList>
     </div>
   );
 };

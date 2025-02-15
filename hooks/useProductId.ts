@@ -1,7 +1,28 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
 
-export function useProductId() {
-  const [value, setValue] = useState<number>(0);
+export const useProductId = <T>(endPointURL: string) => {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  return { value, setValue };
-}
+  const fecthData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get<T>(endPointURL);
+      setData(response.data);
+    } catch (error) {
+      setError('Error fetching data');
+    } finally {
+      setLoading(false);
+    }
+  }, [endPointURL]);
+
+  useEffect(() => {
+    fecthData();
+  }, [fecthData]);
+
+  return { data, error, loading };
+};

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useUserStore } from '@/store/userStore';
 import UserCard from '@/components/UserCard';
 import { User } from '@/types/User';
+import ProductList from '@/components/ProductList';
 
 const UserList = () => {
   const { users, loading, error, fetchUsers, updateUser } = useUserStore();
@@ -44,6 +45,7 @@ const UserList = () => {
           />
         ))}
       </ul>
+      <ProductList></ProductList>
     </div>
   );
 };
