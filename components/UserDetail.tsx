@@ -5,6 +5,7 @@ import { User } from '@/types/User';
 import {useFetch} from "@/hooks/useFetch";
 import {USERS_API} from "@/constants/api";
 import {useEffect} from "react";
+import ProductList from "@/components/ProductList";
 
 
 const UserDetailPage = () =>  {
@@ -34,6 +35,8 @@ const UserDetailPage = () =>  {
             <p>Dirección: {user.address?.street}, {user.address?.city}</p>
             <button onClick={() => router.back()}>🔙 Volver</button>
             <br/>
+
+            <ProductList user={user}></ProductList>
         </div>
     );
 };

@@ -19,3 +19,4 @@ const UserCard = ({ user, onUpdate }: UserCardProps) => {
 };
 
 export default UserCard;
+
