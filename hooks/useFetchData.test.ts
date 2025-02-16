@@ -60,3 +60,26 @@ describe('useProductId', () => {
     expect(result.current.error).toBeNull();
   });
 });
+
+// ¿Por qué es un test de unidad?
+// ✅ Prueba solo el hook (sin renderizar componentes).
+// ✅ Mockea axios para simular respuestas de la API.
+// ✅ Verifica el estado del hook en diferentes escenarios.
+//
+//     Explicación de cada test:
+//     1️⃣ Debe devolver los datos correctamente
+//
+// Simula una respuesta exitosa de axios.get.
+//     Usa waitFor para esperar la actualización del estado.
+//     Verifica que data contiene la información esperada.
+//     Confirma que loading es false y error es null.
+// 2️⃣ Debe manejar errores en la solicitud
+//
+// Simula un error en la petición (mockRejectedValueOnce).
+//     Espera a que error se actualice con el mensaje correcto.
+//     Confirma que data sigue siendo null y loading es false.
+// 3️⃣ Debe manejar el estado de carga correctamente
+//
+// Verifica que loading es true al inicio.
+//     Espera hasta que loading sea false.
+//     Confirma que data contiene la respuesta esperada.
