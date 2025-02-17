@@ -1,29 +1,21 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
+import { useState, useMemo } from 'react';
 import { useUserStore } from '@/store/userStore';
-import UserCard from '@/components/UserCard';
-import { User } from '@/types/User';
-import ProductList from '@/components/ProductList';
 
-const UserList = () => {
-  const { users, loading, error, fetchUsers, updateUser } = useUserStore();
+export default function UserList() {
+  const { users, fetchUsers } = useUserStore();
   const [filter, setFilter] = useState('');
+
+  useMemo(() => {
+    fetchUsers();
+  }, []);
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) =>
       user.name.toLowerCase().includes(filter.toLowerCase())
     );
   }, [users, filter]);
-
-  const handleUpdateUser = (id: number, newData: Partial<User>) => {
-    updateUser(id, newData);
-  };
-  useEffect(() => {
-    fetchUsers(); // 🔹 Llamamos la función directamente
-  }, [fetchUsers]);
-
-  if (loading) return <p>🔄 Cargando usuarios...</p>;
-  if (error) return <p>❌ {error}</p>;
 
   return (
     <div>
@@ -36,18 +28,11 @@ const UserList = () => {
       />
       <ul>
         {filteredUsers.map((user) => (
-          <UserCard
-            key={user.id}
-            user={user}
-            onUpdate={() =>
-              handleUpdateUser(user.id, { name: 'Nombre Actualizado' })
-            }
-          />
+          <li key={user.id}>
+            <Link href={`/users/${user.id}`}>{user.name}</Link>
+          </li>
         ))}
       </ul>
-      <ProductList></ProductList>
     </div>
   );
-};
-
-export default UserList;
+}
