@@ -55,4 +55,17 @@ describe('ProductList', () => {
     // expect(await screen.findByText('Product 1')).toBeInTheDocument();
     // expect(await screen.findByText('Product 2')).toBeInTheDocument();
   });
+
+  it('should return null if no users', () => {
+    (useProductId as jest.Mock).mockReturnValue({
+      data: null, // No hay datos
+      loading: false,
+      error: null,
+    });
+
+    const { container } = render(<ProductList />);
+
+    // Verificamos que el contenedor esté vacío (el componente no renderizó nada)
+    expect(container.firstChild).toBeNull();
+  });
 });

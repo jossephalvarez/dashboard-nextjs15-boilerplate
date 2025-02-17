@@ -10,7 +10,8 @@ interface UserCardProps {
 const UserCard = ({ user, onUpdate }: UserCardProps) => {
   return (
     <li>
-      <strong>{user?.name}</strong> - {user?.email}
+      <strong>{user?.name}</strong>
+      <strong>{user?.email}</strong>
       <button onClick={onUpdate}>Actualizar</button>
       <Link href={`/users/${user?.id}`}>Ver detalles</Link>
     </li>

@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import axios from 'axios';
-import { useProductId } from './useProductId'; // Asegúrate de importar correctamente el hook
+import { useProductId } from '../useProductId'; // Asegúrate de importar correctamente el hook
 import { waitFor } from '@testing-library/react'; // Importar waitFor desde el lugar correcto
 
 jest.mock('axios');
