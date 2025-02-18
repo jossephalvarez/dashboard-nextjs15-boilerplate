@@ -9,6 +9,7 @@ export default function Home() {
         <Link href="/users">Usuarios1</Link>
         <Link href="/users2">Usuarios2</Link>
         <Link href="/products">Productos</Link>
+        <Link href="/products18">Productos</Link>
       </nav>
 
       <ProductList></ProductList>
