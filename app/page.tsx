@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ProductList from '@/app/product/page';
 
 export default function Home() {
   return (
@@ -9,6 +10,8 @@ export default function Home() {
         <Link href="/users2">Usuarios2</Link>
         <Link href="/products">Productos</Link>
       </nav>
+
+      <ProductList></ProductList>
     </main>
   );
 }
