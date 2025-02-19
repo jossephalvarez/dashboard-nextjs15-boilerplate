@@ -10,6 +10,7 @@ export default function Home() {
         <Link href="/users2">Usuarios2</Link>
         <Link href="/products">Productos</Link>
         <Link href="/products18">Productos</Link>
+        <Link href="/post">PostList</Link>
       </nav>
 
       <ProductList></ProductList>
