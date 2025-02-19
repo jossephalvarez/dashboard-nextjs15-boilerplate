@@ -1,5 +1,3 @@
-import UserDetail from '@/components/UserDetail';
-
 export default function UserPage() {
-  return <UserDetail />;
+  return <h1>User Page</h1>;
 }
